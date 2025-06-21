@@ -1,0 +1,77 @@
+<odoo>
+	<record id ="view_nationality" model="ir.ui.view">
+        <field name ="name">sale.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+        <!-- <xpath expr="//form/sheet/group/group[2]" position="inside">
+            <field name="nationality" />
+        </xpath> -->
+        
+        <xpath expr="//field[@name='payment_term_id']" position="after">
+            <field name="nationality" />
+        </xpath>
+
+        <xpath expr="//field[@name='payment_term_id']" position="before">
+                <field name="custom_email" widget="valid_email" />
+        </xpath>
+
+    </field>
+    </record>
+         
+    <record id="view_product_priority" model="ir.ui.view">
+        <field name="name">priority.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+         <field name="arch" type="xml">
+            <field name="invoice_policy" position="after">
+                <field name="product_priority"/>
+            </field>
+        </field>    
+    </record>
+
+    <record id ="view_invoice_date" model="ir.ui.view">
+        <field name ="name">sale.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+	   <xpath expr="//notebook//page[@name='other_information']//group[@name='sale_info']//field[@name='invoice_status']" position="after">
+        <field name="invoice_date" />
+        </xpath>
+        </field>
+     </record>
+
+
+     <record id ="view_notebook_customer_signature" model="ir.ui.view">
+        <field name ="name">sale.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+        <xpath expr="//notebook//page[1]" position="before">
+        <xpath expr="//page[@name='customer_signature']" position="move"/>
+        </xpath>
+
+        <xpath expr="//notebook//page[3]" position="before">
+        <xpath expr="//page[@name='order_lines']" position="move"/>
+        </xpath>
+
+        </field>
+    </record>
+
+
+    <record id ="view_state" model="ir.ui.view">
+        <field name ="name">sale.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        
+        <xpath expr="//field[@name='payment_term_id']" position="attributes">
+            <attribute name="readonly">state == 'cancel'</attribute>
+        </xpath>
+    </field>
+    </record>
+
+
+</odoo>

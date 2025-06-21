@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <template id="student_record_report" name="Student Fees Receipt">
+        <t t-call="web.external_layout">
+           <div class="page">
+                <div class="text-center">
+                    <h2>M.B PATEL ENGLISH MEDIUM SCHOOL</h2>
+                    <p>KADI SARVA VISHWAVIDYALAYA, Kadi Campus Rd, Sector 23, Gandhinagar, Gujarat 382024</p>
+                    <p>Ph: 0265-2560832/33</p>
+                </div>
+                <hr/>
+                <h3 class="text-center">FEES RECEIPT</h3>
+                <!-- <div>
+                    <p><strong>Profile Picture:</strong></p>
+                    <span><img t-att-src="student.profile_picture and image_data_uri(student.profile_picture)" alt="Profile Picture" style="max-width: 150px; max-height: 150px;"/></span>
+                </div> -->
+
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Receipt No.</strong>:<span t-field="student.id"/></td>
+                        <td class="text-right"><strong>Date</strong>: <span t-field="student.create_date"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regn. No.</strong>: <span t-field="student.roll_number"/></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Student Name</strong>: <span t-field="student.name"/></td>
+                        <td><strong>Father's Name</strong>: <span t-field="student.father_name"/></td>
+                    </tr>   
+                    <tr>
+                        <td><strong>Class/Standard</strong>: <span t-field="student.class_id.name"/></td>
+                        <td><strong>Section</strong>: <span t-field="student.section"/></td>
+                    </tr>
+                </table>
+                <hr/>
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Student's Fees Details</th>
+                            <th class="text-right">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total Fee</td>
+                            <td class="text-right"><span t-field="student.total_fees"/></td>
+                        </tr>
+                        <tr>
+                            <td>Paid Fee</td>
+                            <td class="text-right"><span t-field="student.fees_paid"/></td>
+                        </tr>
+                        <tr>
+                            <td>Balance Fee</td>
+                            <td class="text-right"><span t-field="student.fees_due"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <p>Rupees <span t-esc="student.total_fees" options="{'lang': 'en'}"/> Only</p>
+                </div>
+            </div> 
+        </t>
+    </template>
+    
+
+    <template id="student_report_details" name="Action Report Student Details">
+        <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="student">
+                <t t-call="school_management.student_record_report">
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_reports_student_details" model="ir.actions.report">
+        <field name="name">Student Fee Receipt</field>
+        <field name="model">student.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.student_report_details</field>
+        <field name="report_file">school_management.student_report_details</field>
+        <field name="print_report_name">"Student Records"</field>
+        <field name="binding_model_id" ref="model_student_student"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+    <record id="email_template_student_suspend" model="mail.template">
+        <field name="name">Student Suspension</field>
+        <field name="model_id" ref="school_management.model_student_student"/>
+        <field name="subject">Suspension Notification</field>
+        <field name="email_from">bholuu1999@gmail.com</field>
+        <field name="email_to">{{ object.email or '' }}</field>
+        <field name="body_html" type="html">
+            <p>Dear <t t-out="object.name"/>,</p>
+            <p>This is to inform you that you have been suspended from the institution.</p>
+            <p>For further details, please contact the administration.</p>
+            <p>Best regards,<br/>
+            Administration</p>
+        </field>
+    </record>
+
+    <record id="email_template_exam_reminder" model="mail.template">
+        <field name="name">Exam Reminder</field>
+        <field name="model_id" ref="school_management.model_exam_schedule"/>
+        <field name="email_from">bholuu1999@gmail.com</field>
+        <field name="subject">Reminder: Upcoming Exam - {{object.name}}</field>
+        <field name="email_to"></field>
+        <field name="body_html" type="html">
+                <p>Dear <t t-foreach="student_ids" t-as="student"><t t-esc="student.name"/> </t>,</p>
+                <p>This is a reminder that you have an upcoming exam scheduled:</p>
+                <ul>
+                    <li><strong>Exam Name:</strong> <t t-out="object.name"/></li>
+                    <li><strong>Date:</strong> <t t-out="object.date"/></li>
+                    <li><strong>Time:</strong> <t t-out="object.start_time"/> to <t t-out="object.end_time"/></li>
+                    <li><strong>Class:</strong><t t-out="object.room_number"/></li>
+                    <li><strong>Subject:</strong> <t t-out="object.subject"/></li>
+                </ul>
+                <p>Best of luck with your preparations!</p>
+                <p>Regards,</p>
+                <p>School Administration</p>
+        </field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+
+
+</data>
+</odoo>

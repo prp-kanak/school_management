@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="public_time_logger_widget" inherit_id="website.layout">
+        <xpath expr="//main" position="inside">
+            <section class="time-logger-widget my-5 text-center">
+                <h2>🕒 Time Logger Widget</h2>
+                <p class="time-output text-primary fw-bold">Loading...</p>
+            </section>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,31 @@
+<odoo>
+    <template id="class_students_template" name="Class Students">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center mb-4">Students in <t t-esc="class_name" /></h1>
+                <div class="row">
+                    <t t-if="students">
+                        <t t-foreach="students" t-as="student">
+                            <div class="col-md-4 mb-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <t t-esc="student.name" />
+                                        </h5>
+                                        <p class="card-text">
+                                            Age: <t t-esc="student.age" /><br />
+                                            Roll Number: <t t-esc="student.roll_number" />
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="not students">
+                        <p class="text-center">No students found in this standard.</p>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

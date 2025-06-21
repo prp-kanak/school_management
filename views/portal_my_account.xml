@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<template id="portal_my_home_custom_button" inherit_id="portal.portal_my_home" name="Add Custom Button to Portal">
+    <xpath expr="//div[@id='portal_common_category']" position="inside">
+        <t t-call="portal.portal_docs_entry">
+            <t t-set="title">My Inquiries</t>
+            <t t-set="text">View and manage your inquiries</t>
+            <t t-set="url" t-value="'/my/inquiries'"/> 
+            <t t-set="config_card" t-value="True"/>
+        </t>
+    </xpath>
+</template>
+
+   <template id="portal_inquiries_template" name="Portal Inquiries">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h1 class="text-center">Inquiries</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="inquiries" t-as="inquiry">
+                            <tr>
+                                <td><t t-esc="inquiry.name"/></td>
+                                <td><t t-esc="inquiry.state"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+</odoo>

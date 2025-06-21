@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="view_class_record_template" name="View Class Records">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center text-primary mb-4">Class Records</h1>
+                <div class="row">
+                    <t t-foreach="class_record" t-as="record">
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-lg" style="border-radius: 15px;">
+                                <div class="card-body">
+                                    <h5 class="card-title text-success">
+                                        <t t-esc="record.class_id.name" />
+                                    </h5>
+                                    <p class="card-text text-muted">
+                                        <strong>Class Teacher:</strong> <t t-esc="record.teacher_id.name" />
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Total Students:</strong> <t t-esc="record.total_students" />
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <a t-att-href="'/classes/class_records/%d' % record.id" 
+                                           class="btn btn-info" 
+                                           style="border-radius: 10px; font-weight: bold;">
+                                           View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="view_class_detail_template" name="Class Record Details">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center text-primary mb-4">Class Record Details</h1>
+                <div class="card shadow-lg p-4" style="border-radius: 15px;">
+                    <h2 class="card-title text-success">
+                        <t t-esc="class_records.class_id.name" />
+                    </h2>
+                    <p class="card-text">
+                        <strong>Class Teacher:</strong> <t t-esc="class_records.teacher_id.name" />
+                    </p>
+                    <p class="card-text">
+                        <strong>Total Students:</strong> <t t-esc="class_records.total_students" />
+                    </p>
+                    <p class="card-text">
+                        <strong>Additional Notes:</strong> <t t-esc="class_records.notes or 'N/A'" />
+                    </p>
+                    <div class="mt-4">
+                        <a href="/classes/class_records" class="btn btn-primary" style="border-radius: 10px;">
+                            Back to Class Records
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>
+

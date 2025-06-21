@@ -1,0 +1,179 @@
+<odoo>
+    <record id="view_exam_schedule_list" model="ir.ui.view">
+        <field name="name">exam.schedule.list</field>
+        <field name="model">exam.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="subject"/>
+                <field name="date"/>
+                <field name="status"/>
+                <field name="supervisor_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_exam_schedule_form" model="ir.ui.view">
+    <field name="name">exam.schedule.form</field>
+    <field name="model">exam.schedule</field>
+    <field name="arch" type="xml">
+        <form string="Exam Schedule">
+            <header>
+            </header>
+            <sheet>
+                <h1>
+                <field name="sequence_no"/>
+                </h1>
+                <group string="General Information" colspan="4">
+                    <group>
+                        <field name="name" placeholder="Enter Exam Name" />
+                        <field name="exam_code" placeholder="Enter Unique Exam Code" />
+                        <field name="date" />
+                        <field name="syllabus_id"/>
+                        <field name="status"/>
+                    </group>
+                    <group>
+                        <field name="class_id" />
+                        <field name="subject" />
+                        <field name="room_number" placeholder="e.g., Room 101" />
+                    </group>
+                </group>
+
+
+                <group string="Exam Timing" colspan="4">
+                    <group>
+                        <field name="start_time" placeholder="Start time in 24-hour format" />
+                        <field name="end_time" placeholder="End time in 24-hour format" />
+                        <field name="duration" readonly="1" />
+                    </group>
+                </group>
+
+
+            <notebook>
+                <page string="Enrolled Students">
+                        <field name="student_ids" mode="list">
+                            <list>
+                                <field name="name" string="Student Name"/>
+                                <field name="roll_number" string="Roll Number"/>
+                                <field name="email" string="Email"/>
+                                <field name="contact_number" string="Phone"/>
+                            </list>
+                        </field>
+                </page>
+                <page name="Marks and Grading">
+                    <group string="Marks and Grading" colspan="4">
+                        <group>
+                            <field name="total_marks" />
+                            <field name="passing_marks" />
+                            <field name="is_practical" />
+                        </group>
+                        <group>
+                            <field name="grading_scale" />
+                            <field name="is_retake_allowed" />
+                        </group>
+                    </group>
+                </page>
+
+                <page name="Supervisor Details">
+                    <group string="Supervisor Details" colspan="4">
+                        <group>
+                            <field name="supervisor_id" />
+                            <field name="supervisor_contact" readonly="1" />
+                        </group>
+                    </group>
+                </page>
+
+                <page name="Additional Information">
+                    <group string="Additional Information" colspan="4">
+                        <group>
+                            <field name="remarks" widget="text" placeholder="Add any additional details or notes" />
+                            <field name="late_policy" widget="text" placeholder="Specify late policy (if any)" />
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+            </sheet>
+        <chatter/>
+        </form>
+    </field>
+</record>
+
+    <record id="view_exam_schedule_kanban" model="ir.ui.view">
+        <field name="name">exam.schedule.kanban</field>
+        <field name="model">exam.schedule</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="date"/>
+                <field name="syllabus_id"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record">
+                            <div class="o_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div>Class: <field name="class_id"/></div>
+                                <div>Subject: <field name="subject"/></div>
+                                <div>Date: <field name="date"/></div>
+                                <div>Time: <field name="start_time"/> - <field name="end_time"/></div>
+                                <div>Room: <field name="room_number"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_exam_schedule_pivot" model="ir.ui.view">
+        <field name="name">exam.schedule.pivot</field>
+        <field name="model">exam.schedule</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="date" type="row"/>
+                <field name="class_id" type="col"/>
+                <field name="total_marks" type="measure"/>
+                <field name="passing_marks" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_exam_schedule_search" model="ir.ui.view">
+        <field name="name">exam.schedule.search</field>
+        <field name="model">exam.schedule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="class_id"/>
+                <field name="subject"/>
+                <field name="date"/>
+                <field name="syllabus_id"/>
+                <field name="is_practical"/>
+                <filter string="Today" name="today" domain="[('date', '=', context_today())]"/>
+                <filter string="Practical Exams" name="practical" domain="[('is_practical', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="seq_exam_schedule" model="ir.sequence">
+            <field name="name">Exam Schedule Sequence</field>
+            <field name="code">exam.schedule</field>
+            <field name="prefix">EXAM-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="action_exam_schedule" model="ir.actions.act_window">
+        <field name="name">Exam Schedule</field>
+        <field name="res_model">exam.schedule</field>
+        <field name="view_mode">list,form,kanban,pivot</field>
+        <field name="view_id" ref="view_exam_schedule_list"/>
+    </record>
+
+    <!-- <menuitem id="menu_exam_management" parent="menu_school_management" name="Examinations" sequence="20"/> -->
+    <menuitem id="menu_exam_schedule" parent="school_management.menu_exam_management" name="Exam Schedule" action="action_exam_schedule" sequence="2"/>
+</odoo>

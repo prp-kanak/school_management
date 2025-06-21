@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="sales_record_report" inherit_id="sale.report_saleorder_document">
+    <xpath expr='//span[@t-field="doc.note"]' position="before">                
+        <div>
+            <strong>Created On:</strong>
+            <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"/>
+        </div>
+    </xpath>
+    <xpath expr='//span[@t-field="doc.note"]' position="after">
+        <div>
+            <strong>Nationality:</strong>
+            <span t-esc="doc.nationality"/>
+        </div>
+    </xpath>
+    
+    <!-- <xpath expr='//div[@t-field="doc.partner_id"]' position="replace"
+        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'>
+    </xpath> -->
+</template>
+</odoo>

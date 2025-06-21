@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="school_management.ValidEmailField" t-inherit="web.EmailField" owl="1">
+        <!-- Display error message if the email is invalid -->
+        <xpath expr="." position="inside">
+            <span class="text-danger" t-if="!state.isValid">Invalid Email</span>
+        </xpath>
+
+        <xpath expr="//input" position="after">
+            <a 
+                t-if="props.record.data[props.name] and state.isValid"
+                t-att-href="'mailto:' + props.record.data[props.name]"
+                class="ms-2 d-inline-flex align-items-center"
+            >
+                <i class="fa fa-envelope" data-tooltip="Send Email" aria-label="Send Email"></i>
+            </a>
+        </xpath>
+    </t>
+</templates>

@@ -1,0 +1,59 @@
+<odoo>
+    <record id="view_school_inquiry_list" model="ir.ui.view">
+        <field name="name">school.inquiry.list</field>
+        <field name="model">school.inquiry</field>
+        <field name="arch" type="xml">
+            <list string="School Inquiries" decoration-danger="overdue">
+                <field name="name"/>
+                <field name="priority" widget="selection"/>
+                <field name="student_name"/>
+                <field name="contact_no"/>
+                <field name="inquiry_date"/>
+                <field name="expected_follow_up_date"/>
+                <field name="follow_up_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_inquiry_form" model="ir.ui.view">
+        <field name="name">school.inquiry.form</field>
+        <field name="model">school.inquiry</field>
+        <field name="arch" type="xml">
+            <form string="School Inquiry">
+                <header>
+                    <button name="action_close" type="object" string="Close Inquiry" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="priority"/>
+                        <field name="student_name"/>
+                        <field name="contact_no"/>
+                        <field name="inquiry_date"/>
+                        <field name="expected_follow_up_date" readonly="1"/>
+                        <field name="overdue" widget="boolean_toggle" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="description"/>
+                        </page>
+                        <page string="Response">
+                            <field name="response"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_inquiry_inquiry" model="ir.actions.act_window">
+    <field name="name">School Inquiries</field>
+    <field name="res_model">school.inquiry</field>
+    <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_school_inquiry" name="Inquiries" parent="menu_school_management" action="action_school_inquiry_inquiry" sequence="30"/>
+    
+
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="exam_records_report_template_demo" name="Exam Records Report">
+    <t t-call="web.basic_layout">
+        <div class="page">
+            <div class="text-center">
+                <h2>Exam Records</h2>
+            </div>
+
+            <strong>Class:</strong> <span t-out="doc.class_id.name"/>
+            <br/>
+            <strong>Exam Name:</strong> <span t-out="doc.schedule_id.name"/>
+
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Marks Gained</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="doc.student_result_ids" t-as="line">
+                        <tr>
+                            <td>
+                                <span t-out="line.student_name or 'No Name Available'"/>
+                            </td>
+                            <td>
+                                <span t-out="line.marks_gained or 0.0"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</template>
+
+
+    <template id="wizard_exam_records_report_sample" name="Wizard Exam Records Report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="school_management.exam_records_report_template_demo"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_exam_records" model="ir.actions.report">
+        <field name="name">Exam Records Report</field>
+        <field name="model">exam.records.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.wizard_exam_records_report_sample</field>
+        <field name="report_file">school_management.wizard_exam_records_report_sample</field>
+        <field name="print_report_name">"Exam Records - %s (%s)" % (object.class_id.name, object.schedule_id.name)</field>
+    </record>
+</odoo>

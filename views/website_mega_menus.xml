@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="menu_students_mega_menu" model="website.menu">
+        <field name="name">School Management</field>
+        <field name="url">/school_management</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">20</field>
+        <field name="is_mega_menu">True</field>
+        <field name="mega_menu_content" type="html">
+            <section class="py-4 bg-light border rounded shadow-sm">
+                <div class="container">
+                    <div class="row">
+                        <!-- Students -->
+                        <div class="col-lg-3">
+                            <h5 class="mb-3 text-primary">Students</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="/students" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-primary"></i>View Students
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/students/fees_details" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-primary"></i>Fees Details
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/students/attendance" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-primary"></i>Attendance
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Teachers -->
+                        <div class="col-lg-3">
+                            <h5 class="mb-3 text-success">Teachers</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="/teachers" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-success"></i>Teachers Profiles
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/teachers/assingments" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-success"></i>Assingments
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Classes -->
+                        <div class="col-lg-3">
+                            <h5 class="mb-3 text-warning">Classes</h5>
+                            <ul class="list-unstyled">
+                                <t t-call="school_management.dynamic_standards_menu_template"/>
+                                <li>
+                                    <a href="/classes/timetable" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-warning"></i>Timetable
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/classes/timetable" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-warning"></i>Timetable
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/classes/class_records" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-warning"></i>class records
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Exams -->
+                        <div class="col-lg-3">
+                            <h5 class="mb-3 text-danger">Exams</h5>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a href="/exams/syllabus" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-danger"></i>Syllabus
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/exams" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-danger"></i>Exam Schedule
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/exams/exam_results" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-danger"></i>Exam Results
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/exams/records" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-danger"></i>Exam Records
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="school_management.MyCustomWidgetTemplate" owl="1">
+        <div class="o_custom_widget">
+            <button type="button" class="btn btn-primary" t-on-click="onClickButton">
+                Click Me!
+            </button>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="view_students_template" name="View Students">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center text-primary mb-5" style="font-family: 'Arial', sans-serif; font-weight: bold;">
+                    Students Profiles
+                </h1>
+                <div class="row">
+                    <t t-foreach="students" t-as="student">
+                        <div class="col-md-4 mb-4 student-card">
+                            <div class="card shadow-sm border-0"
+                                 style="background: linear-gradient(135deg, #f7f7f7, #e3f2fd); border-radius: 15px; overflow: hidden;">
+                                <div class="card-body text-center">
+                                    <div style="width: 100px; height: 100px; margin: 0 auto;
+                                                background-color: #007bff; color: white;
+                                                border-radius: 50%; display: flex;
+                                                justify-content: center; align-items: center;
+                                                font-size: 24px; font-weight: bold;">
+                                        <t t-out="student.name[0]" />
+                                    </div>
+                                    <h5 class="card-title text-info mt-3"
+                                        style="font-family: 'Verdana', sans-serif; font-weight: bold;">
+                                        <t t-out="student.name" />
+                                    </h5>
+                                    <p class="card-text" style="color: #555;">
+                                        <strong>Roll Number:</strong> <t t-out="student.roll_number" /><br />
+                                        <strong>Class:</strong> <t t-out="student.class_id.name" /><br />
+                                        <strong>Email:</strong> <t t-out="student.email" />
+                                    </p>
+                                    <button class="btn btn-primary mt-3"
+                                            style="border-radius: 20px; padding: 10px 20px;
+                                                   font-weight: bold; font-size: 14px;">
+                                        Contact
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

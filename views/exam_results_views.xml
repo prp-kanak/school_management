@@ -1,0 +1,124 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_exam_result_list" model="ir.ui.view">
+        <field name="name">exam.result.list</field>
+        <field name="model">exam.result</field>
+        <field name="arch" type="xml">
+            <list string="Exam Results">
+                <!-- <field name="name"/> -->
+                <field name="schedule_id"/>
+                <field name="class_id"/>
+                <field name="subject"/>
+                <field name="exam_date"/>
+                <!-- <field name="status"/> -->
+            </list>
+        </field>
+    </record>
+
+    
+    <record id="view_exam_result_form" model="ir.ui.view">
+    <field name="name">exam.result.form</field>
+    <field name="model">exam.result</field>
+    <field name="arch" type="xml">
+        <form string="Exam Result">
+            <header>
+                <!-- <button string="Confirm" type="object" name="action_confirm" class="btn-primary"/>
+                <button string="Publish" type="object" name="action_publish" class="btn-success"/> -->
+            </header>
+            <sheet>
+                <field name="result_code" readonly="1"/>
+                <group string="General Information" colspan="4">
+                    <group>
+                        <field name="name" placeholder="Result Name" />
+                        <field name="schedule_id" />
+                    </group>
+                    <group>
+                        <field name="class_id" readonly="1" />
+                        <field name="subject" readonly="1" />
+                        <field name="exam_date" readonly="1" />
+                    </group>
+                </group>
+                <group string="Marks and Grading" colspan="4">
+                    <group>
+                        <field name="total_marks" readonly="1" />
+                        <field name="passing_marks" readonly="1" />
+                        <field name="grading_scale" readonly="1" />
+                        <field name="is_practical" readonly="1" />
+                    </group>
+                </group>
+                <notebook>
+                        <page string="Student Results">
+                            <field name="student_addline">
+                                <list editable="bottom">
+                                    <field name="marks_gained"/>
+                                    <field name="student_name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+    <!-- Kanban View -->
+    <record id="view_exam_result_kanban" model="ir.ui.view">
+        <field name="name">exam.result.kanban</field>
+        <field name="model">exam.result</field>
+        <field name="arch" type="xml">
+            <kanban string="Exam Results">
+                <field name="name"/>
+                <field name="result_code"/>
+                <field name="class_id"/>
+                <field name="subject"/>
+                <field name="exam_date"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record">
+                            <div class="o_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div>Status: <field name="status"/></div>
+                                <div>Class: <field name="class_id"/></div>
+                                <div>Subject: <field name="subject"/></div>
+                                <div>Exam Date: <field name="exam_date"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_exam_result_pivot" model="ir.ui.view">
+        <field name="name">exam.result.pivot</field>
+        <field name="model">exam.result</field>
+        <field name="arch" type="xml">
+            <pivot string="Exam Results">
+                <field name="class_id" type="row"/>
+                <field name="subject" type="row"/>
+                <field name="total_marks" type="measure"/>
+                <field name="passing_marks" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="seq_exam_result" model="ir.sequence">
+            <field name="name">Exam Result Sequence</field>
+            <field name="code">exam.result</field>
+            <field name="prefix">RES-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+    </record>
+
+    <record id="action_exam_results" model="ir.actions.act_window">
+        <field name="name">Exam Results</field>
+        <field name="res_model">exam.result</field>
+        <field name="view_mode">list,form,kanban,pivot</field>
+    </record>
+
+    <menuitem id="menu_exam_results" parent="school_management.menu_exam_management" name="Exam Results" action="action_exam_results" sequence="3"/>
+</odoo>

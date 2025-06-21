@@ -1,0 +1,240 @@
+    <odoo>
+    <record id="view_student_student_tree" model="ir.ui.view">
+        <field name="name">student.student.tree</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <list string="Students">
+            <field name="name" widget="width" width="150"/>
+            <field name="class_id" widget="width" width="150"/>
+            <field name="section" widget="width" width="150"/>
+            <field name="gender" widget="width" width="120"/>
+            <!-- <field name="age" invisible="1" widget="width" width="120"/> -->
+            <!-- <field name="teacher_id" widget="width" width="150"/> -->
+            <field name="status" width="150" widget="badge" decoration-success="status == 'passed'" decoration-danger="status == 'failed'"/>
+            </list>
+        </field>
+    </record>
+    
+    <record id="view_student_student_form" model="ir.ui.view">
+    <field name="name">student.student.form</field>
+    <field name="model">student.student</field>
+    <field name="arch" type="xml">
+    <form string="Student">
+        <header>
+                <button name="action_promote_student" type="object" string="Promote" class="btn-primary"/>
+                <button name="action_suspend" string="Suspend" type="object" class="btn btn-danger"/>
+                <!-- <field name="stage" widget="statusbar" options="{'clickable': True}"/> -->
+        </header>
+    <sheet>
+        <div class="oe_button_box" name="button_box">
+                <button type="object" name="action_open_scheduled_exams" class="oe_stat_button" icon="fa-calendar">
+                <field name="scheduled_exam_count" widget="statinfo" string="Exams"/>
+                </button>
+        </div>
+        <group>
+            <group>
+                <field name="is_fav" widget="boolean_favorite" nolabel="1" options="{'size': 'lg'}"/>
+                <field name="name" placeholder="Student name"/>
+                <field name="class_id"/>
+                <field name="section"/>
+                <field name="roll_number" />
+                
+                <widget name="my_custom_widget"/>
+
+            </group>
+            <group>
+                <field name="profile_picture" widget="image" class="oe_avatar" nolabel="1" options="{'size': [120, 120]}"/>
+            </group>
+            <group string="Personal Details">
+                <field name="birth_date"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="address"/>
+                <field name="contact_number"/>
+                <field name="email" widget="email"/>
+                <field name="blood_group"/>
+                <field name="disability" widget="radio"/>
+            </group>
+            <group string="Academic Details">
+                <field name="admission_date"/>
+                <field name="previous_grade"/>
+                <!-- <field name="board"/> -->
+                <field name="admission_test_score"/>
+                <field name="status"/>
+                <!-- <field name="teacher_id" string="Class Teacher"/> -->
+        </group>
+        </group>
+
+        <notebook>
+            <page string="Parent Details">
+                <group string="Father's Details">
+                    <field name="father_name"/>
+                    <field name="father_contact"/>
+                    <field name="father_occupation"/>
+                </group>
+                <group string="Mother's Details">
+                    <field name="mother_name"/>
+                    <field name="mother_contact"/>
+                    <field name="mother_occupation"/>
+                </group>
+            </page>
+            <page string="Fees Details">
+                <group>
+                    <field name="total_fees"/>
+                    <field name="fees_paid"/>
+                    <field name="fees_due"/>
+                    <field name="last_payment_date"/>
+                    <field name="qr_code_url" widget="image" class="oe_avatar" nolabel="1" options="{'size': [150, 150]}"/>
+                </group>
+            </page>
+            <page string="Attachments">
+            <group>
+                <group string="Identity Documents">
+                    <field name="id_proof" filename="id_proof_filename"/>
+                    <field name="birth_certificate" filename="birth_certificate_filename"/>
+                </group>
+                <group string="Academic Documents">
+                    <field name="transfer_certificate" filename="transfer_certificate_filename"/>
+                    <field name="mark_sheet" filename="mark_sheet_filename"/>
+                </group>
+                <group string="Fee Documents">
+                    <field name="fee_receipt" filename="fee_receipt_filename"/>
+                </group>
+            </group>
+            </page>
+
+            <page string="Additional Information">
+                    <field name="transportation_required" widget="radio"/>
+            </page>
+        </notebook>
+    </sheet>
+        <chatter/>
+    </form>
+    </field>
+    </record>
+    
+   <record id="view_student_student_kanban" model="ir.ui.view">
+        <field name="name">student.student.kanban</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <!-- <field name="stage"/> -->
+                    <templates>
+                        <t t-name="card">
+                            <div class="o_kanban_card">
+                                <div class="d-flex justify-content-between">
+                                    <strong><field name="name"/></strong>
+                                    <span><b>Age:</b> <field name="age"/></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><b>Gender:</b> <field name="gender"/></span>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span><b>Email:</b> <field name="email"/></span>
+                                    <span>
+                                        <field name="status" widget="badge" 
+                                            decoration-success="status == 'passed'" 
+                                            decoration-danger="status == 'failed'"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-name="kanban-column-header">
+                            <div>
+                                <!-- <strong><field name="stage" widget="statusbar"/></strong> -->
+                            </div>
+                        </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--pivot view -->
+    <record id="view_student_student_pivot" model="ir.ui.view">
+    <field name="name">student.student.pivot</field>
+    <field name="model">student.student</field>
+    <field name="arch" type="xml">
+        <pivot string="Students">
+            <field name="name" type="row"/>
+            <field name="gender" type="row"/>
+            <field name="age" type="measure"/>
+            <field name="weight" type="measure"/>
+        </pivot>
+    </field>
+    </record>
+
+    <!-- graph view -->
+    <record id="view_student_student_graph" model="ir.ui.view">
+    <field name="name">student.student.graph</field>
+    <field name="model">student.student</field>
+    <field name="arch" type="xml">
+        <graph string="Students Analysis" type="bar" stacked="True">
+            
+            <field name="age" type="measure"/>
+            <field name="weight" type="measure"/>
+
+            <field name="gender" type="row"/>
+            <field name="class_id" type="group"/>
+        </graph>
+    </field>
+</record>
+
+   <!--search view -->
+    <record id="view_student_student_search" model="ir.ui.view">
+        <field name="name">student.student.search</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <search string="Students">
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="status"/>
+                <field name="birth_date"/>
+                <field name="class_id"/>
+                <field name="transportation_required"/>
+                <!-- <field name="section"/> -->
+                <!-- <field name="teacher_id"/> -->
+            
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="filter_passed" string="Passed Students" domain="[('status', '=', True)]"/>
+                <filter name="filter_failed" string="Failed Students" domain="[('status', '=', False)]"/>
+                <filter name="filter_male" string="Male Students" domain="[('gender', '=', 'male')]"/>
+                <filter name="filter_female" string="Female Students" domain="[('gender', '=', 'female')]"/>
+                <filter name="filter_transportation" string="Transportation" domain="[('transportation_required', '=', 'yes')]"/>
+
+                
+                <filter name="group_by_gender" string="Group by Gender" context="{'group_by': 'gender'}"/>
+                <filter name="group_by_class" string="Group by Class" context="{'group_by': 'class_id'}"/>
+                <filter name="group_by_section" string="Group by section" context="{'group_by': 'section'}"/>
+                <filter name="group_by_passed" string="Group by Pass/Fail" context="{'group_by': 'status'}"/>
+                <filter name="group_by_birth_year" string="Group by Birth Year" context="{'group_by': 'birth_date:year'}"/>
+                <!-- <filter name="group_by_teacher" string="Group by Teacher" context="{'group_by': 'teacher_id'}"/> -->
+
+
+                <filter name="filter_future_birthdate" string="Future Birth Dates" domain="[('birth_date', '>=', context_today())]" />
+                <filter name="filter_adults" string="Adults (18 and Above)" domain="[('age', '>=', 18)]"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_student_student" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.student</field>
+        <field name="view_mode">list,form,kanban,pivot,graph,search</field>
+        <field name="view_id" ref="view_student_student_tree"/> <!-- Default view -->
+        <field name="context"> {'search_default_is_passed':1}</field>
+    </record>
+
+
+
+    <!-- <menuitem id="menu_school_management" name="School Management" sequence="10"/> -->
+
+    <!-- <menuitem id="menu_student_management" parent="menu_school_management" name="Students"/>
+    <menuitem id="menu_teacher_management" parent="menu_school_management" name="Teachers" sequence="15"/>
+    <menuitem id="menu_exam_management" parent="menu_school_management" name="Examinations" sequence="20"/>
+    <menuitem id="classroom_management_menu" name="Classrooms" parent="menu_school_management" sequence="25"/>
+    <menuitem id="menu_school_inquiry" name="Inquiries" parent="menu_school_management" action="action_school_inquiry" sequence="25"/> -->
+
+    <menuitem id="menu_student_records" parent="menu_student_management" name="Student records" action="action_student_student"/>
+    
+</odoo>

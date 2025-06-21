@@ -1,0 +1,39 @@
+<odoo>
+    <template id="standards_template" name="Standards List">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center text-primary mb-4">Standards</h1>
+                <div class="row">
+                    <t t-foreach="standards" t-as="standard">
+                        <div class="col-md-4 mb-3">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center text-dark">
+                                        <t t-esc="standard.name" />
+                                    </h5>
+                                    <p class="card-text text-center text-muted">
+                                        Class Teacher: <t t-esc="standard.class_teacher_id.name or 'N/A'" />
+                                    </p>
+                                    <div class="text-center mt-3">
+                                        <a t-att-href="'/school/' + standard.name" class="btn btn-primary">
+                                            View Students
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+    <template id="dynamic_standards_menu_template">
+        <t t-foreach="request.env['school.standard'].sudo().search([])" t-as="standard">
+            <li>
+                <a t-att-href="'/school/' + standard.name" class="text-dark text-decoration-none d-flex align-items-center">
+                    <i class="me-2 text-warning"></i><t t-esc="standard.name" />
+                </a>
+            </li>
+        </t>
+    </template>
+</odoo>

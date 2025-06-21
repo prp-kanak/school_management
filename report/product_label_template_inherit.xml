@@ -1,0 +1,42 @@
+<odoo>
+    <!-- Custom QWeb Template -->
+    <template id="report_simple_label3x9_demo">
+    
+       <t t-set="table_style" t-value="'width:60mm;height:30mm;margin-right:2mm;margin-bottom:2mm;' + table_style" />
+<td t-att-style="make_invisible and 'visibility:hidden;'">
+    <div class="o_label_full" t-att-style="table_style" style="position: relative;">
+        <div class="text-left" style="font-size: 18px; line-height: 10px; margin-top: 5px; height: 18mm; overflow: hidden;">
+            <strong t-field="product.name"/>
+        </div>
+        <!-- Reference and Price (Line 4) -->
+        <div style="display: flex; justify-content: space-between; font-size: 15px; margin-top: 2mm;">
+            <span t-field="product.default_code" style="text-align: left; margin-right: 20px; font-weight:bold;"/>
+            <strong class="o_label_price" 
+                t-out="pricelist._get_product_price(product, 1, pricelist.currency_id or product.currency_id)" 
+                t-options="{'widget': 'monetary', 'display_currency': pricelist.currency_id or product.currency_id, 'label_price': True}" 
+                style="text-align: right; font-size: 20px; margin-left: 80px;"/>
+        </div>
+        <div t-if="not pricelist._get_product_price(product, 1, pricelist.currency_id or product.currency_id)">
+            <span style="color: red;">Price not available for this product.</span>
+        </div>
+    </div>
+</td>
+
+
+
+</template>
+
+
+    <!-- Report Action -->
+     <record id="report_product_template_label_3X9_label" model="ir.actions.report">
+        <field name="name">Demo Label Template</field>
+        <field name="model">product.template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.report_simple_label3x9</field>
+        <field name="report_file">school_management.report_simple_label3x9</field>
+        <field name="paperformat_id" ref="product.paperformat_label_sheet" />
+        <field name="print_report_name">'Demo_Label_' + object.print_format</field>
+        <field name="binding_model_id" ref="product.model_product_template"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

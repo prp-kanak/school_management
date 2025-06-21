@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	    <menuitem id="menu_school_management" name="School Management" sequence="10"/>
+
+	    <menuitem id="menu_student_management" parent="menu_school_management" name="Students"/>
+	    <menuitem id="menu_teacher_management" parent="menu_school_management" name="Teachers" sequence="15"/>
+	    <menuitem id="menu_exam_management" parent="menu_school_management" name="Examinations" sequence="20"/>
+	    <menuitem id="classroom_management_menu" name="Classrooms" parent="menu_school_management" sequence="25"/>
+	    
+</odoo>

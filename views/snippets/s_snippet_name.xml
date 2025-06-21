@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="s_school_management_snippet" name="School Management Snippet">
+        <section class="s_school_management_snippet custom-school-snippet">
+            <div class="school-header">
+                <h1 class="school-title">Empowering Education</h1>
+                <p class="school-subtitle">Streamline your school's management with ease</p>
+            </div>
+            <div class="school-content">
+                <div class="feature-card">
+                    <h3 class="feature-title">Student Management</h3>
+                    <p class="feature-description">
+                        Manage student data efficiently, including admissions, attendance, and grades.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="feature-title">Teacher Scheduling</h3>
+                    <p class="feature-description">
+                        Simplify teacher schedules and optimize resource allocation.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3 class="feature-title">Exam Scheduling</h3>
+                    <p class="feature-description">
+                        Organize exams and share results seamlessly with students and parents.
+                    </p>
+                </div>
+            </div>
+            <div class="school-footer">
+                <a href="#" class="cta-button">Learn More</a>
+            </div>
+        </section>
+    </template>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_report_template_demo" name="Sale Order Report">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="text-center">
+                    <h2>Sale Order's List</h2>
+                </div>
+
+                <strong>Date:</strong> <span t-out="doc.start_date"/> To <span t-out="doc.end_date"/>
+
+                <table class="table table-bordered table-sm">
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Sales Person</th>
+                            <th>Date</th>
+                            <th>State</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th class="text-right">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.sale_orders" t-as="order">
+                            <tr t-if="order.order_line">
+                                <td t-att-rowspan="len(order.order_line)">
+                                    <span t-out="order.name"/>
+                                </td>
+                                <td t-att-rowspan="len(order.order_line)">
+                                    <span t-out="order.partner_id.name"/>
+                                </td>
+                                <td t-att-rowspan="len(order.order_line)">
+                                    <span t-out="order.user_id.name"/>
+                                </td>
+                                <td t-att-rowspan="len(order.order_line)">
+                                    <span t-out="order.date_order"/>
+                                </td>
+                                <td t-att-rowspan="len(order.order_line)">
+                                    <span t-out="order.state"/>
+                                </td>
+                                <td>
+                                    <span t-out="order.order_line[0].product_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-out="order.order_line[0].product_uom_qty"/>
+                                </td>
+                                <td t-att-rowspan="len(order.order_line)" class="text-right">
+                                    <span t-out="order.amount_total"/>
+                                </td>
+                            </tr>
+                            <t t-foreach="order.order_line[1:]" t-as="line">
+                                <tr>
+                                    <td>
+                                        <span t-out="line.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-out="line.product_uom_qty"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="wizard_sale_order_report_sample" name="Wizard Sale Order Report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="school_management.sale_order_report_template_demo"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_wizard_sale_order_report" model="ir.actions.report">
+        <field name="name">Sale Order Report</field>
+        <field name="model">wizard.demo</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.wizard_sale_order_report_sample</field>
+        <field name="report_file">school_management.wizard_sale_order_report_sample</field>
+        <field name="print_report_name">"Sale Orders from %s to %s" % (object.start_date, object.end_date)</field>
+    </record>
+</odoo>

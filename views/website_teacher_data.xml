@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="view_teacher_template" name="Teacher Profiles">
+        <t t-call="website.layout">
+            <div class="container my-5">
+                <h1 class="text-center text-primary mb-4">Teacher Profiles</h1>
+                <div class="text-end mb-3">
+                    <a href="/teachers/add_teacher" 
+                       class="btn btn-success" 
+                       style="border-radius: 20px; padding: 10px 20px; font-weight: bold;">
+                        Add New Teacher
+                    </a>
+                </div>
+                <div class="row">
+                    <t t-foreach="teachers" t-as="teacher">
+                        <div class="col-md-4 mb-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center text-success" t-esc="teacher.name" />
+                                    <p class="card-text">
+                                        <strong>Email:</strong> <t t-esc="teacher.email" /><br/>
+                                        <strong>Phone:</strong> <t t-esc="teacher.phone" />
+                                    </p>
+                                    <div class="text-center">
+                                        <a t-att-href="'/teachers/edit_teacher/%s' % teacher.id" 
+                                           class="btn btn-success" 
+                                           style="border-radius: 10px; padding: 5px 10px; font-weight: bold;">
+                                           Edit Profile
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+
+                <div class="pagination mt-4 d-flex justify-content-center">
+                    <t t-if="current_page > 1">
+                        <a t-att-href="'/teachers?page=%d' % (current_page - 1)" 
+                           class="btn btn-secondary me-2">
+                            Previous
+                        </a>
+                    </t>
+                    <span class="align-self-center">Page <t t-esc="current_page" /> of <t t-esc="total_pages" /></span>
+                    <t t-if="current_page &lt; total_pages" >
+                        <a t-att-href="'/teachers?page=%d' % (current_page + 1)" 
+                           class="btn btn-secondary ms-2">
+                            Next
+                        </a>
+                    </t>
+                </div>
+                
+            </div>
+        </t>
+    </template>
+
+    <template id="add_teacher_template" name="Add Teacher Page">
+    <t t-call="website.layout">
+        <div class="container my-5">
+            <h1 class="text-center text-primary mb-4">Add New Teacher</h1>
+            <form action="/teachers/add_teacher/submit-teacher" method="post" class="shadow p-4 rounded" style="max-width: 600px; margin: auto; background: #f9f9f9;">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Teacher's Name" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Teacher's Email" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter Phone Number" pattern="\d{10}" title="Enter a valid 10-digit phone number" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Salary</label>
+                    <input type="number" class="form-control" name="salary" id="salary" placeholder="Enter Salary" step="0.01" min="0" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="Resume" class="form-label">Resume</label>
+                    <input type="file" class="form-control" name="resume" id="resume" placeholder="Upload your resume" required="true" />
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" style="border-radius: 20px; padding: 10px 20px; font-weight: bold;">  
+                        Save Teacher
+                    </button>
+                    <a href="/teachers" class="btn btn-secondary" style="border-radius: 20px; padding: 10px 20px; font-weight: bold;">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </t>
+</template>
+
+
+<template id="edit_teacher_template" name="Edit Teacher Page">
+    <t t-call="website.layout">
+        <div class="container my-5">
+            <h1 class="text-center text-primary mb-4">Edit Teacher</h1>
+            <form t-att-action="'/teachers/update_teacher/%s' % teacher.id" method="post" class="shadow p-4 rounded" style="max-width: 600px; margin: auto; background: #f9f9f9;">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" t-att-value="teacher.name" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" t-att-value="teacher.email" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" name="phone" id="phone" t-att-value="teacher.phone" pattern="\d{10}" title="Enter a valid 10-digit phone number" required="true" />
+                </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Salary</label>
+                    <input type="number" class="form-control" name="salary" id="salary" t-att-value="teacher.salary" step="0.01" min="0" required="true" />
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success" style="border-radius: 20px; padding: 10px 20px; font-weight: bold;">  
+                        Save Changes
+                    </button>
+                    <a href="/teachers" class="btn btn-secondary" style="border-radius: 20px; padding: 10px 20px; font-weight: bold;">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </t>
+</template>
+
+
+</odoo>

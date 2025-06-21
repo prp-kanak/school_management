@@ -1,0 +1,102 @@
+<odoo>
+    <!-- Attendance list View -->
+    <record id="view_student_attendance_list" model="ir.ui.view">
+        <field name="name">student.attendance.list</field>
+        <field name="model">student.attendance</field>
+        <field name="arch" type="xml">
+            <list>
+            <!-- <list string="Attendance" decoration-success="status == 'present'" decoration-danger="status == 'absent'"> -->
+                <field name="student_id" string="Student Name"/>
+                <field name="date" string="Attendance Date"/>
+                <field name="status" widget="badge" decoration-success="status == 'present'" decoration-danger="status == 'absent'"/>
+                <field name="remarks"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Attendance Form View -->
+    <record id="view_student_attendance_form" model="ir.ui.view">
+        <field name="name">student.attendance.form</field>
+        <field name="model">student.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Attendance">
+                <sheet>
+                    <group>
+                        <field name="student_id" string="Student"/>
+                        <field name="date" widget="date" string="Attendance Date"/>
+                        <field name="status" widget="radio" string="Attendance Status"/>
+                    </group>
+                    <group>
+                        <field name="remarks" placeholder="Enter remarks for the attendance"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Attendance Kanban View -->
+    <record id="view_student_attendance_kanban" model="ir.ui.view">
+        <field name="name">student.attendance.kanban</field>
+        <field name="model">student.attendance</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_attendance">
+                <templates>
+                    <t t-name="card">
+                        <div t-att-class="'o_kanban_record ' + (record.status.raw_value == 'present' and 'o_kanban_attendance_present' or 'o_kanban_attendance_absent')">
+                            <div class="o_kanban_header">
+                                <strong><field name="student_id"/></strong>
+                                <span class="o_kanban_date"><field name="date"/></span>
+                            </div>
+                            <div>
+                                <field name="status" widget="badge"/>
+                            </div>
+                            <div>
+                                <small><field name="remarks"/></small>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Attendance Graph View -->
+    <record id="view_student_attendance_graph" model="ir.ui.view">
+        <field name="name">student.attendance.graph</field>
+        <field name="model">student.attendance</field>
+        <field name="arch" type="xml">
+            <graph string="Attendance Analysis" type="bar">
+                <field name="status" type="row"/>
+                <field name="date" type="col"/>
+                <field name="id" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Attendance Pivot View -->
+    <record id="view_student_attendance_pivot" model="ir.ui.view">
+        <field name="name">student.attendance.pivot</field>
+        <field name="model">student.attendance</field>
+        <field name="arch" type="xml">
+            <pivot string="Attendance Pivot">
+                <field name="status" type="row"/>
+                <field name="student_id" type="col"/>
+                <field name="id" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Attendance Action -->
+    <record id="action_student_attendance" model="ir.actions.act_window">
+        <field name="name">Attendance</field>
+        <field name="res_model">student.attendance</field>
+        <field name="view_mode">list,form,kanban,graph,pivot</field>
+    </record>
+
+    <!-- Add Submenu Under Students -->
+    <menuitem id="menu_student_attendance" 
+              name="Attendance" 
+              parent="menu_student_management" 
+              action="action_student_attendance" 
+              sequence="20"/>
+</odoo>

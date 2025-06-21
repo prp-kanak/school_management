@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="view_exam_list" model="ir.ui.view">
+            <field name="name">exam.exam.list</field>
+            <field name="model">exam.exam</field>
+            <field name="arch" type="xml">
+                <list string="Exam List">
+                    <field name="name"/>
+                    <field name="exam_code"/>
+                    <field name="exam_date"/>
+                    <field name="class_id"/>
+                    <field name="subject"/>
+                    <field name="total_marks"/>
+                    <field name="passing_marks"/>
+                    <field name="grading_scale"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Form View -->
+        <record id="view_exam_list_form" model="ir.ui.view">
+            <field name="name">exam.exam.form</field>
+            <field name="model">exam.exam</field>
+            <field name="arch" type="xml">
+                <form string="Exam Details">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="exam_code"/>
+                                <field name="exam_date"/>
+                                <field name="start_time"/>
+                                <field name="end_time"/>
+                                <field name="class_id"/>
+                                <field name="subject"/>
+                            </group>
+                            <group>
+                                <field name="total_marks"/>
+                                <field name="passing_marks"/>
+                                <field name="grading_scale"/>
+                                <field name="is_retake_allowed"/>
+                                <field name="late_policy"/>
+                            </group>
+                        </group>
+                        <group string="Supervisor Details">
+                            <field name="supervisor_id" options="{'no_create': True}"/>
+                            <field name="supervisor_contact" readonly="1"/>
+                        </group>
+                        <group string="Student Performance">
+                            <field name="student_id"/>
+                            <field name="marks_obtained"/>
+                        </group>
+                        <group string="Additional Information">
+                            <field name="remarks"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_exam_list_kanban" model="ir.ui.view">
+            <field name="name">exam.exam.kanban</field>
+            <field name="model">exam.exam</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_example">
+                    <field name="name"/>
+                    <field name="exam_date"/>
+                    <field name="class_id"/>
+                    <field name="subject"/>
+                    <templates>
+                        <t t-name="card">
+                            <div t-attf-class="oe_kanban_card">
+                                <strong><t t-esc="record.name.value"/></strong>
+                                <p>
+                                    <strong>Class:</strong>
+                                    <t t-esc="record.class_id.value"/>
+                                </p>
+                                <p>
+                                    <strong>Subject:</strong>
+                                    <t t-esc="record.subject.value"/>
+                                </p>
+                                <p>
+                                    <strong>Exam Date:</strong>
+                                    <t t-esc="record.exam_date.value"/>
+                                </p>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Pivot View -->
+        <record id="view_exam_list_pivot" model="ir.ui.view">
+            <field name="name">exam.exam.pivot</field>
+            <field name="model">exam.exam</field>
+            <field name="arch" type="xml">
+                <pivot string="Exam Analysis">
+                    <field name="class_id" type="row"/>
+                    <field name="subject" type="row"/>
+                    <field name="total_marks" type="measure"/>
+                    <field name="marks_obtained" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_exam_list_search" model="ir.ui.view">
+            <field name="name">exam.exam.search</field>
+            <field name="model">exam.exam</field>
+            <field name="arch" type="xml">
+                <search string="Search Exams">
+                    <field name="name"/>
+                    <field name="exam_code"/>
+                    <field name="exam_date"/>
+                    <field name="class_id"/>
+                    <field name="subject"/>
+                    <filter string="Upcoming Exams" name="upcoming_exams" domain="[('exam_date', '>', context_today())]"/>
+                </search>
+            </field>
+        </record>
+
+    <!-- Action -->
+    <record id="action_exam_list" model="ir.actions.act_window">
+        <field name="name">Exam list</field>
+        <field name="res_model">exam.exam</field>
+        <field name="context">{'default_filter_upcoming_exams': 1}</field>
+        <field name="view_mode">list,form,kanban,pivot</field>
+        <field name="view_id" ref="view_exam_list"/>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_exam_management" parent="menu_school_management" name="Examinations" sequence="20"/>
+    <menuitem id="menu_exam_list" parent="menu_exam_management" name="Exam list" action="action_exam_list"/>
+
+</odoo>

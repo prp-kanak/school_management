@@ -1,0 +1,70 @@
+.custom-school-snippet {
+    background: #f9f9f9;
+    padding: 40px 20px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+.school-header {
+    margin-bottom: 30px;
+}
+
+.school-title {
+    font-size: 36px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.school-subtitle {
+    font-size: 18px;
+    color: #555555;
+}
+
+.school-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 300px;
+    text-align: left;
+}
+
+.feature-title {
+    font-size: 20px;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+.feature-description {
+    font-size: 14px;
+    color: #666666;
+}
+
+.school-footer {
+    margin-top: 30px;
+}
+
+.cta-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background: #007BFF;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #0056b3;
+}

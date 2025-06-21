@@ -1,0 +1,70 @@
+<odoo>
+    <!-- Calendar View -->
+    <record id="view_school_timetable_calendar" model="ir.ui.view">
+        <field name="name">school.timetable.calendar</field>
+        <field name="model">school.timetable</field>
+        <field name="arch" type="xml">
+            <calendar string="Weekly Timetable" date_start="start_datetime" date_stop="end_datetime" color="teacher_id">
+                <field name="name"/>
+                <field name="teacher_id"/>
+                <field name="class_id"/>
+                <field name="subject_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_school_timetable_form" model="ir.ui.view">
+        <field name="name">school.timetable.form</field>
+        <field name="model">school.timetable</field>
+        <field name="arch" type="xml">
+            <form string="Timetable">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="teacher_id"/>
+                        <field name="class_id"/>
+                        <field name="subject_id"/>
+                    </group>
+                    <group>
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                    </group>
+                    <field name="description"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree/List View -->
+    <record id="view_school_timetable_tree" model="ir.ui.view">
+        <field name="name">school.timetable.tree</field>
+        <field name="model">school.timetable</field>
+        <field name="arch" type="xml">
+            <list string="Timetable">
+                <field name="name"/>
+                <field name="teacher_id"/>
+                <field name="class_id"/>
+                <field name="subject_id"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_school_timetable" model="ir.actions.act_window">
+        <field name="name">Timetables</field>
+        <field name="res_model">school.timetable</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="view_id" ref="view_school_timetable_calendar"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_create">
+                Schedule your first timetable for the week here.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="school_timetable_menu" name="Timetables" parent="classroom_management_menu" action="action_school_timetable"/>
+</odoo>

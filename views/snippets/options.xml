@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="custom_snippet" inherit_id="website.snippets" name="Custom - Snippets">
+       <xpath expr="//snippets[@id='snippet_groups']/*[1]" position="before">
+          <t snippet-group="custom_school" t-snippet="website.s_snippet_group" string="Custom_school" />
+       </xpath>
+
+       <xpath expr="//snippets[@id='snippet_structure']/*[1]" position="before">
+          <t t-snippet="school_management.s_school_management_snippet" string="Custom snippet" group="custom_school">
+             <keywords>Snippet</keywords>
+          </t>
+       </xpath>
+    </template>
+</odoo>

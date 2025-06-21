@@ -1,0 +1,158 @@
+<odoo>
+	<record id="view_teacher_teacher_list" model="ir.ui.view">
+        <field name="name">teacher.teacher.list</field>
+        <field name="model">teacher.teacher</field>
+        <field name="arch" type="xml">
+            <list string="Teachers">
+                <field name="name"/>
+                <field name="age"/>
+                <field name="salary"/>
+                <field name="gender"/>
+                <field name="stage" widget="badge" decoration-success="stage == 'active'" decoration-danger="stage == 'in_active'" decoration-warning="stage == 'retired'"/>
+            </list>
+        </field>    
+    </record>
+
+<!-- Form View -->
+    <record id="view_teacher_teacher_form" model="ir.ui.view">
+    <field name="name">teacher.teacher.form</field>
+    <field name="model">teacher.teacher</field>
+    <field name="arch" type="xml">
+        <form string="Teacher">
+            <header>
+                <button name="set_active" type="object" string="Set Active"
+                        modifiers="{'invisible': [('stage', '=', 'active')]}"/>
+                    
+                    <button name="set_inactive" type="object" string="Set Inactive"
+                        modifiers="{'invisible': [('stage', '=', 'in_active')]}"/>
+                    
+                    <button name="set_retired" type="object" string="Set Retired"
+                        modifiers="{'invisible': [('stage', '=', 'retired')]}"/>
+
+                <field name="stage" widget="statusbar" options="{'clickable': True}"/>  
+                <!-- <button name="school_management.action_school_timetable" string="View Timetable Records" type="action"/> -->
+                <!-- <button name="action_search_active_teachers" string="View Active Teachers" type="object"/> -->
+                <button name="action_count_active_teachers" string="Count Active Teachers" type="object"/>
+                <button name="action_search_students_for_teacher" string="View Assigned Students" type="object"/>
+                <!-- <button name="action_browse_teacher" string="Browse Teacher" type="object"/> -->
+            </header>
+            <sheet>
+            <div class="oe_button_box" name="button_box">
+                    <button type="object" name="action_open_supervised_exams" class="oe_stat_button" icon="fa-calendar">
+                    <field name="supervised_exam_count" widget="statinfo" string="Supervisor"/>
+                    </button>
+            </div>
+                <group>
+                    <group>
+                        <field name="name" placeholder="Full Name"/>
+                        <field name="gender"/>
+                        <field name="age"/>
+                        <field name="email" widget="email"/>
+                        <field name="phone"/>
+                        <field name="address"/>
+                        <field name="hire_date"/>
+                        <field name="stage"/>
+                        <field name="assigned_class"/>
+
+                    </group>
+                    <group>
+                        <field name="profile_picture" widget="image" class="oe_avatar" nolabel="1" options="{'size': [120, 120]}"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Qualifications">
+                        <group>
+                            <field name="qualifications"/>
+                            <field name="subject_specialization"/>
+                        </group>
+                    </page>
+                    <page string="Salary Details">
+                        <group>
+                            <field name="salary"/>
+                            <field name="bonus"/>
+                            <field name="total_salary" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Assigned Students">
+                        <field name="student_ids">
+                                <list editable="bottom">
+                                    <field name="students_name" />
+                                </list>
+                            </field>
+                    </page>
+                    <page string="Additional Information">
+                    
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+
+    <!-- Kanban View -->
+    <record id="view_teacher_teacher_kanban" model="ir.ui.view">
+        <field name="name">teacher.teacher.kanban</field>
+        <field name="model">teacher.teacher</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage">
+                <field name="stage"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_card">
+                            <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                                <span>
+                                    <field name="stage" widget="badge" 
+                                        decoration-success="stage == 'active'" 
+                                        decoration-danger="stage == 'in_active'"
+                                        decoration-warning="stage == 'retired'"/>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span><strong>Age:</strong> <field name="age"/></span>
+                                <span><strong>Gender:</strong> <field name="gender"/></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span><strong>Subject:</strong> <field name="subject_specialization"/></span>
+                            </div>
+                            <div class="o_kanban_activity">
+                                <field name="activity_ids" widget="kanban_activity"/>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-name="kanban-column-header">
+                        <div class="o_kanban_column_title">
+                            <strong><field name="stage" widget="statusbar"/></strong>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+
+    <record id="view_teacher_teacher_search" model="ir.ui.view">
+        <field name="name">teacher.teacher.search</field>
+        <field name="model">teacher.teacher</field>
+        <field name="arch" type="xml">
+            <search string="Search Teachers">
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <filter name="active" string="Active" domain="[('active', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_teacher" model="ir.actions.act_window">
+        <field name="name">Teachers</field>
+        <field name="res_model">teacher.teacher</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_teacher" 
+              name="Teachers" 
+              parent="menu_teacher_management" 
+              action="action_teacher" 
+              sequence="43"/>
+</odoo>

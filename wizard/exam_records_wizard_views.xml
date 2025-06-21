@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_exam_records_wizard_form" model="ir.ui.view">
+        <field name="name">exam.records.wizard.form</field>
+        <field name="model">exam.records.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Exam Records">
+                <group>
+                    <field name="class_id" />
+                    <field name="schedule_id" />
+                </group>
+                <group>
+                    <field name="student_result_ids" nolabel="1">
+                        <list>
+                            <field name="student_name" />
+                            <field name="marks_gained" />
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Print" type="object" name="print_report" class="btn-primary"/>
+                    <button string="Close" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_exam_records_wizard" model="ir.actions.act_window">
+        <field name="name">Exam Records</field>
+        <field name="res_model">exam.records.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_exam_records_wizard_form" />
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_exam_records" 
+          name="Exam Records" 
+          parent="school_management.menu_exam_management" 
+          action="school_management.action_exam_records_wizard" 
+          sequence="3" />
+
+</odoo>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="paragon_report_template_detail" name="Paragon Report">
+        <t t-call="web.basic_layout">
+                <!-- Header -->
+                <div class="header" style="margin-bottom: 10px;border-bottom: 1px solid black;">
+                    <div style="text-align: center; font-size: 12px; padding-bottom: 10px;">
+                        <strong>Company Name:</strong> <t t-esc="doc.company_id.name"/> |
+                        <strong>Contact:</strong> <t t-esc="doc.company_id.phone"/> |
+                        <strong>Email:</strong> <t t-esc="doc.company_id.email"/>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer" style="margin-top: 10px; border-top: 2px solid #000; padding-top: 10px;">
+                    <div style="text-align: center; font-size: 12px; line-height: 1.5;">
+                        <span>Thank you for your business!</span><br/>
+                        <span>For any inquiries, contact us at <t t-esc="doc.company_id.phone"/> or email us at <t t-esc="doc.company_id.email"/></span><br/>
+                    </div>
+                </div>
+
+            <div class="page" style="padding-top: 20px;">
+                <h2 style="text-align: center;font-weight:bold; font-size:17px; margin-bottom:10px;">PROFORMA INVOICE</h2>
+                    <table style="width:100%; border: 1px solid black;font-size: 14px; border-bottom:hidden;">
+                      <tr>
+                            <td style="width: 50%; vertical-align: top;">
+                              <strong t-esc="doc.company_id"/><br/> 
+                              <t t-esc="doc.company_id.street"/><br/>
+                              <t t-esc="doc.company_id.city"/>, <t t-esc="doc.company_id.state_id.name"/><br/>
+                              <t t-esc="doc.company_id.country_id.name"/> - <t t-esc="doc.company_id.zip"/><br/>
+                              TRN: <t t-esc="doc.company_id.vat"/><br/>
+                              Email: <t t-esc="doc.company_id.email"/> 
+                            </td>
+
+                            <td style="width: 50%;" rowspan="2">
+                              <table style="width:100%; height: 100%;border-top:hidden;">
+                                <tr>
+                                  <td style="width: 50%;">
+                                    <strong>Voucher No:</strong><br/>
+                                    <t t-esc="doc.name"/>
+                                  </td>
+                                  <td style="width: 50%;">
+                                    <strong>Date:</strong><br/>
+                                    <t t-esc="doc.date_order"/>
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;"></td>
+                                  <td style="padding: 5px;">
+                                    <strong>Mode/Terms of Payment:</strong><br/>
+                                    <t t-esc="doc.payment_term_id.name"/>
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 5px;">
+                                    <strong>Buyers Ref/Order No:</strong><br/>
+                                    <t t-esc="doc.client_order_ref"/>
+                                  </td>
+                                  <td style="padding: 5px;">
+                                    <strong>Other Reference(s):</strong><br/>
+                                    <t t-esc="doc.client_order_ref"/>
+                                  </td>  
+                                </tr>
+                                <tr>
+                                  <td style="padding: 5px;">
+                                    <strong>Despatch Through:</strong><br/>
+                                    BY ROAD
+                                  </td>
+                                  <td style="padding: 5px;">
+                                    <strong>Destination:</strong><br/>
+                                    <t t-esc="doc.partner_id.country_id.name"/>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style="padding: 5px; border-bottom:hidden;border-right:hidden;">
+                                    <strong>Terms of Delivery:</strong><br/>
+                                    Ex-Factory
+                                  </td>
+                                </tr>
+                        </table>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td style="border: 1px solid black; padding: 5px; vertical-align: top;">
+                      <strong>Buyer</strong><br/>
+                      <t t-esc="doc.partner_id.name"/><br/>
+                      <t t-esc="doc.partner_id.street"/><br/>
+                      <t t-esc="doc.partner_id.city"/>, <t t-esc="doc.partner_id.country_id.name"/><br/>
+                      VATIN: <t t-esc="doc.partner_id.vat"/>
+                    </td>
+                  </tr>
+                </table>
+
+
+            <table style="width: 100%; text-align: center; font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black; padding: 5px; width: 5%;">SI No.</th>
+                        <th style="border: 1px solid black; padding: 5px; width: 45%;">Description of Goods</th>
+                        <!-- <th style="border: 1px solid black; padding: 5px;">Due on</th> -->
+                        <th style="border: 1px solid black; padding: 5px; width: 15%;">Quantity</th>
+                        <th style="border: 1px solid black; padding: 5px; width: 15%;">Rate</th>
+                        <th style="border: 1px solid black; padding: 5px; width: 10%;">Per</th>
+                        <th style="border: 1px solid black; padding: 5px; width: 10%;">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="i" t-value="1"/>
+                    <t t-foreach="doc.order_line" t-as="line">
+                        <tr>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="i"/>
+                                <t t-set="i" t-value="i + 1"/>
+                            </td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.product_id.name"/>
+                            </td>
+                            <!-- <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.due_date or 'N/A'"/> 
+                            </td> -->
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.product_uom_qty"/>
+                            </td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.price_unit"/>
+                            </td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.product_uom.name"/>
+                            </td>
+                            <td style="border: 1px solid black; padding: 5px;">
+                                <t t-esc="line.price_subtotal"/>
+                            </td>
+                        </tr>
+                    </t>
+                    
+                    <tr style="height:10px;">
+                        <td></td>
+                        <td style="text-align: right;font-weight: bold;">Total</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="padding: 5px;">
+                            <t t-esc="doc.amount_total"/> AED
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table style="width:100%; height:10px;font-size:12px;">
+                <tr style="height:100px">
+                    <td style="border-right: hidden; border-bottom:hidden; width:50%">
+                        <strong>Amount Chargeable (in words)</strong><br/>
+                        <p style="margin: 0;">
+                            <t t-esc="doc.currency_id.amount_to_text(doc.amount_total)"/> 
+                            (<t t-esc="doc.amount_total"/> <t t-esc="doc.currency_id.symbol"/>)
+                        </p>
+                    </td>
+                    <td style="text-align:right; width:50%;" colspan="2">E and O.E</td>
+                </tr>
+                <tr>
+                    <td style="width:50%">
+                    </td>
+                    <td style="border-left:hidden; border-top:hidden;width:50%;">
+                        <span>company's Bank Details</span><br/>
+                        <span>Bank Name:</span><strong>RAK BANK-XXX7001</strong><br/>
+                        <span>A/c No.:</span><strong>0652895607001</strong><br/>
+                        <span>IBAN:</span><strong>AE470400000652895607001</strong><br/>
+                        <span>Branch &amp; SWIFT Code:</span><strong>AL Hamra NRAKAEAK</strong><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-top:hidden; width:50%;"></td>
+                    <td style="height:50px; width:50%;text-align:center;">
+                        <p style="margin: 0;">
+                            for <t t-esc="doc.company_id.name"/>
+                        </p>
+                        <p style="margin:17px;text-align: right;">Authorised Signatory</p>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </t>
+
+
+    <t t-call="web.basic_layout">
+        <div class="header" style="margin-bottom: 20px;">
+                    <div style="text-align: center; font-size: 12px; border-bottom: 1px solid black; padding-bottom: 10px;">
+                        <strong>Company Name:</strong> <t t-esc="doc.company_id.name"/> |
+                        <strong>Contact:</strong> <t t-esc="doc.company_id.phone"/> |
+                        <strong>Email:</strong> <t t-esc="doc.company_id.email"/>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer" style="margin-top: 20px;">
+                    <div style="text-align: center; font-size: 10px; border-top: 1px solid black; padding-top: 10px;">
+                        Page <span class="pageNumber"/> of <span class="totalPages"/>
+                    </div>
+                </div>
+        <div class="page" style="padding-top: 20px;">
+            <h2 style="text-align: center; font-weight: bold; font-size: 20px;">INVOICE DETAILS</h2>
+            <t t-if="doc.invoice_ids">
+                <t t-foreach="doc.invoice_ids" t-as="invoice">
+                    <p style="font-size: 20px; margin-bottom: 10px;">
+                        <strong>Customer:</strong> <t t-esc="invoice.partner_id.name"/><br/>
+                        <strong>Recipient Bank:</strong> <t t-esc="invoice.partner_bank_id.acc_number"/><br/>
+                        <strong>Invoice Date:</strong> <t t-esc="invoice.invoice_date"/><br/>
+                        <strong>Invoice Total:</strong> <t t-esc="invoice.amount_total"/> <t t-esc="invoice.currency_id.symbol"/><br/>
+                        <strong>Recepient name:</strong> <t t-esc="invoice.partner_bank_id.acc_number"/><br/>
+                        <strong>Sales Team:</strong><t t-esc="invoice.team_id.name"/><br/>
+                        <strong>Payment Reference:</strong><t t-out="invoice.payment_reference"/><br/>
+                        <strong>Payment Method:</strong><t t-out="invoice.preferred_payment_method_line_id.name"/>
+                    </p>
+                </t>
+            </t>
+        </div>
+        </t>
+    </template>
+
+    <template id="sale_demo_inter" name="Sale Paragon Report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="school_management.paragon_report_template_detail" />
+            </t>
+        </t>
+    </template>
+
+    <record id="paperformat_full_width" model="report.paperformat">
+        <field name="name">Full Width Paper</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height">297</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_spacing">5</field>
+        <field name="dpi">86</field>
+    </record>  
+
+    <record id="action_report_sale_paragon" model="ir.actions.report">
+        <field name="name">Paragon Report</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.sale_demo_inter</field>
+        <field name="report_file">school_management.sale_demo_inter</field>
+        <field name="print_report_name">"Sale Order"</field>
+        <field name="binding_model_id" ref="model_sale_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="school_management.paperformat_full_width"/>
+    </record>
+</odoo>

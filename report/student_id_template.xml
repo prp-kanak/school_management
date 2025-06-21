@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="student_id_card_front" name="Custom Student ID Card">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="width: 350px; height: 570px; border: 2px solid #0056b3; padding: 25px; border-radius: 12px; text-align: center; font-family: Arial, sans-serif; margin: auto; background-color: #f4f9ff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+
+                    <h2 style="margin: 0; font-size: 24px; color: #0056b3;">M.B PATEL ENGLISH MEDIUM SCHOOL</h2>
+                    <p style="font-size: 18px; color: #666; margin: 5px 0;">KADI SARVA VISHWAVIDYALAYA</p>
+                    <hr style="border-top: 2px solid #0056b3; margin: 15px 0;" />
+
+                    <img t-att-src="student.profile_picture and image_data_uri(student.profile_picture)" 
+                         alt="Student Picture" 
+                         style="width: 150px; height: 150px; border-radius: 50%; margin: 15px 0; border: 3px solid #0056b3;" />
+                    <h3 style="margin: 10px 0; font-size: 20px; color: #333;"><span t-field="student.name" /></h3>
+                    <p style="font-size: 18px; color: #444; margin: 5px 0;">
+                        <strong>Roll No:</strong> <span t-field="student.roll_number" />
+                    </p>
+                    <p style="font-size: 18px; color: #444; margin: 5px 0;">
+                        <strong>Class:</strong> <span t-field="student.class_id.name" />
+                    </p>
+                    <p style="font-size: 18px; color: #444; margin: 5px 0;">
+                        <strong>Section:</strong> <span t-field="student.section" />
+                    </p>
+                    <hr style="border-top: 2px solid #0056b3; margin: 15px 0;" />
+                    <p style="font-size: 14px; color: #666; margin: 5px 0;">
+                        Address: Kadi Campus Rd, Sector 23, Gandhinagar, Gujarat 382024
+                    </p>
+                    <p style="font-size: 14px; color: #666; margin: 5px 0;">
+                        Phone: 0265-2560832/33
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="student_id_card_back" name="Student ID Card Back">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="width: 350px; height: 570px; border: 2px solid #0056b3; padding: 25px; border-radius: 12px; font-family: Arial, sans-serif; margin: auto; background-color: #f4f9ff; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+
+                    <h2 style="text-align: center; font-size:20px; color: #0056b3;">Personal Details</h2>
+                    <hr style="border-top: 2px solid #0056b3; margin: 15px 0;"/>
+                    <p style="font-size:16px; color: #444; margin: 8px 0;">
+                        <strong>DOB:</strong> <span t-field="student.birth_date" />
+                    </p>
+                    <p style="font-size:16px; color: #444; margin: 8px 0;">
+                        <strong>Gender: </strong> <span t-field="student.gender" />
+                    </p>
+                    <p style="font-size:16px; color: #444; margin: 8px 0;">
+                        <strong>Address:</strong> <span t-field="student.address" />
+                    </p>
+
+                    <h3 style="text-align: center; font-size: 20px; color: #0056b3; margin: 15px 0px;">Important Information </h3>
+                    <hr style="border-top: 2px solid #0056b3; margin: 15px 0;" />
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Father's Name:</strong> <span t-field="student.father_name" />
+                    </p>
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Father's Contact:</strong> <span t-field="student.father_contact"/>
+                    </p>
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Mother's Name:</strong> <span t-field="student.mother_name" />
+                    </p>
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Mother's Contact:</strong> <span t-field="student.mother_contact"/>
+                    </p>
+                    <hr style="border-top: 2px solid #0056b3; margin: 15px 0;" />
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Email:</strong> <span t-field="student.email" />
+                    </p>
+                    <p style="font-size: 16px; color: #444; margin: 8px 0;">
+                        <strong>Emergency Contact:</strong> <span t-field="student.contact_number"/>
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="id_card_report_custom" name="Student ID Card Report">
+        <t t-foreach="docs" t-as="student">
+            <t t-call="web.html_container">
+                <t t-call="school_management.student_id_card_front"/>
+            </t>
+            <t t-call="web.html_container">
+                <t t-call="school_management.student_id_card_back" />
+            </t>             
+        </t>
+    </template>
+
+    <record id="id_card_paper_format" model="report.paperformat">
+        <field name="name">ID Card Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <field name="page_height" eval="150"/> 
+        <field name="page_width" eval="100"/> 
+        <field name="margin_top" eval="5"/>
+        <field name="margin_bottom" eval="2"/>
+        <field name="margin_left" eval="5"/>
+        <field name="margin_right" eval="5"/>
+        <field name="orientation">Portrait</field>
+    </record>
+
+    <record id="action_student_id_card_custom" model="ir.actions.report">
+        <field name="name">Student ID Card</field>
+        <field name="model">student.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_management.id_card_report_custom</field>
+        <field name="report_file">school_management.id_card_report_custom</field>
+        <field name="print_report_name">"Custom Student ID Card"</field>
+        <field name="binding_model_id" ref="model_student_student"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="id_card_paper_format"/>
+    </record>
+</odoo>

@@ -1,0 +1,88 @@
+<odoo>
+	<record id="view_ptm_schedule_list" model="ir.ui.view">
+    <field name="name">ptm.schedule.list</field>
+    <field name="model">ptm.schedule</field>
+    <field name="arch" type="xml">
+        <list string="PTM Schedule">
+            <field name="name"/>
+            <field name="class_id"/>
+            <field name="date"/>
+            <field name="start_time"/>
+            <field name="end_time"/>
+            <field name="state"/>
+        </list>
+    </field>
+</record>
+
+<record id="view_ptm_schedule_form" model="ir.ui.view">
+    <field name="name">ptm.schedule.form</field>
+    <field name="model">ptm.schedule</field>
+    <field name="arch" type="xml">
+        <form string="PTM Schedule">
+            <header>
+                <button name="action_set_scheduled" type="object" string="Schedule" />
+                <button name="action_set_completed" type="object" string="Complete"/>
+                <button name="action_set_cancelled" type="object" string="Cancel"/>
+                <field name="state" widget="statusbar" statusbar_visible="draft,scheduled,completed,cancelled" options="{'clickable': True}"/>
+            <!-- <field name="activity_ids" widget="mail_activity"/> -->
+            </header>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                    <field name="class_id"/>
+                    <field name="date"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="agenda"/>
+                </group>
+                <notebook>
+                    <page string="Students Scheduled">
+                        <field name="student_ids">
+                            <list string="Students">
+                                <field name="student_id"/>
+                                <field name="parent_name"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+     
+    <record id="view_ptm_schedule_search" model="ir.ui.view">
+        <field name="name">ptm.schedule.search</field>
+        <field name="model">ptm.schedule</field>
+        <field name="arch" type="xml">
+            <search string="PTM Schedule">
+                <field name="name" string="PTM Title"/>
+                <field name="class_id" string="Class"/>
+                <field name="state" string="Status"/>
+                <filter name="state" string="Draft" domain="[('state', '=', 'draft')]" help="PTMs in Draft state"/>
+                <filter name="state" string="Scheduled" domain="[('state', '=', 'scheduled')]" help="PTMs that are Scheduled"/>
+                <filter name="state" string="Completed" domain="[('state', '=', 'completed')]" help="PTMs that are Completed"/>
+                <filter name="state" string="Cancelled" domain="[('state', '=', 'cancelled')]" help="PTMs that are Cancelled"/>
+            </search>
+        </field>
+    </record>
+
+
+	<!-- Action -->
+    <record id="action_classroom_timetable" model="ir.actions.act_window">
+        <field name="name">PTM</field>
+        <field name="res_model">ptm.schedule</field>
+        <field name="view_mode">list,form</field>
+        <!-- <field name="search_view_id" ref="view_ptm_schedule_search"/> -->
+        <!-- <field name="view_id" ref="view_ptm_schedule_list"/> -->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_create">
+                Schedule your first timetable for the week here.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- Menu -->
+    <menuitem id="school_ptm_menu" name="PTM's" parent="classroom_management_menu" action="action_classroom_timetable"/>
+</odoo>
