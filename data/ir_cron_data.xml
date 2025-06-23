@@ -11,7 +11,7 @@
 			<field name="interval_type">days</field>			
 		</record>
 
-		<record id="ir_cron_update_exam_status" model="ir.cron">
+		<!-- <record id="ir_cron_update_exam_status" model="ir.cron">
             <field name="name">Update Exam Status</field>
             <field name="model_id" ref="model_exam_schedule"/>
             <field name="state">code</field>
@@ -20,7 +20,7 @@
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
             <field name="active" eval="True"/>
-        </record>
+        </record> -->
 
 	    <record id="cron_notify_upcoming_exams" model="ir.cron">
 	        <field name="name">Notify About Upcoming Exams</field>

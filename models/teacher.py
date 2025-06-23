@@ -5,7 +5,8 @@ class TeacherTeacher(models.Model):
     _description = "Faculty of school"
     _inherit = ['mail.thread', 'mail.activity.mixin','mixin.model']
 
-    # name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name", required=True)
+    user_id = fields.Many2one('res.users', string="User account", required=True)
     profile_picture = fields.Image(string="Profile Picture", max_width=128, max_height=128)
     address = fields.Text(string="Address")
     age = fields.Integer(string="Age")
@@ -39,7 +40,7 @@ class TeacherTeacher(models.Model):
         compute="_compute_supervised_exam_count",
     )
     active = fields.Boolean(string="Active", default=True)
-    assigned_class = fields.Many2one('school.standard', string="Assigned Class")
+    class_id = fields.Many2one('school.standard', string="Assigned Class")
     student_ids = fields.One2many('teacher.student.line', 'teacher_unique', string="Assigned Students")
     resume = fields.Binary(string="Resume", attachment=True)  # Binary field for storing file
     resume_filename = fields.Char(string="Resume Filename")  # Optional: store file name
@@ -136,11 +137,11 @@ class TeacherTeacher(models.Model):
             'context': dict(self._context, default_supervisor_id=self.id),
         }
 
-    @api.onchange('assigned_class')
+    @api.onchange('class_id')
     def _onchange_assigned_class(self):
             for record in self:
-                if record.assigned_class:
-                    students = self.env['student.student'].search([('class_id', '=', record.assigned_class.id)])
+                if record.class_id:
+                    students = self.env['student.student'].search([('class_id', '=', record.class_id.id)])
                     record.student_ids = [(5, 0, 0)] 
                     record.student_ids = [(0, 0, {'students_name': student.id}) for student in students]
                 else:

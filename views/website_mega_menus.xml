@@ -55,8 +55,8 @@
                             <ul class="list-unstyled">
                                 <t t-call="school_management.dynamic_standards_menu_template"/>
                                 <li>
-                                    <a href="/classes/timetable" class="text-dark text-decoration-none d-flex align-items-center">
-                                        <i class="me-2 text-warning"></i>Timetable
+                                    <a href="/classes/standards" class="text-dark text-decoration-none d-flex align-items-center">
+                                        <i class="me-2 text-warning"></i>Standards
                                     </a>
                                 </li>
                                 <li>

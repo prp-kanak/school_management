@@ -1,0 +1,15 @@
+<odoo>
+    <template id="product_quantity_display" inherit_id="website_sale.products_item" customize_show="True">
+    <xpath expr="//div[hasclass('product_price')]" position="after">
+        <div class="mt-2">
+            <span t-if="product.virtual_available &gt; 0" class="text-success">
+                <strong>In Stock:</strong>
+                <t t-out="int(product.virtual_available)"/>
+            </span>
+            <span t-if="product.virtual_available == 0" class="text-danger">
+                <strong>Out of Stock</strong>
+            </span>
+        </div>
+    </xpath>
+    </template>
+</odoo>

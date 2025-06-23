@@ -52,8 +52,8 @@
                         <field name="address"/>
                         <field name="hire_date"/>
                         <field name="stage"/>
-                        <field name="assigned_class"/>
-
+                        <field name="class_id"/>
+                        <field name="user_id"/>
                     </group>
                     <group>
                         <field name="profile_picture" widget="image" class="oe_avatar" nolabel="1" options="{'size': [120, 120]}"/>
@@ -147,12 +147,12 @@
     <record id="action_teacher" model="ir.actions.act_window">
         <field name="name">Teachers</field>
         <field name="res_model">teacher.teacher</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form,kanban</field>
     </record>
 
     <menuitem id="menu_teacher" 
               name="Teachers" 
               parent="menu_teacher_management" 
               action="action_teacher" 
-              sequence="43"/>
+              sequence="4"/>
 </odoo>

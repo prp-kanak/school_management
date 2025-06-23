@@ -4,7 +4,7 @@
 	'category': 'School/School',
 	'summary': 'School management',
     'description': """School app.""",
-    'depends': ['base', 'mail','sale_management','website','portal','product','stock', 'sale', 'web'],
+    'depends': ['base', 'mail','sale_management','website','portal','product','stock', 'sale', 'web', 'website_sale'],
     'data': 
         [ 
           # 'data/student_data.xml',
@@ -60,7 +60,8 @@
           'views/portal_my_account.xml',
           # 'views/website_footer_template.xml',
           'views/website_home_form.xml',
-
+          # 'views/website_so_page.xml',
+          'views/website_stock_update.xml',
                                                     
 
           'views/snippets/options.xml',
@@ -74,7 +75,7 @@
 
 
           'static/src/xml/lifecycle_template.xml',
-          # 'static/src/xml/d-none_student.xml',
+
 
         ],
     'installable': True,
@@ -89,7 +90,13 @@
             'school_management/static/src/js/d_none_student.js',
 
             'school_management/static/src/js/student_orm_rpc.js',
-            
+
+            'school_management/static/src/js/student_create.js',
+
+            # 'school_management/static/src/js/student_patch.js',
+                
+            # 'school_management/static/src/js/update_sale_order.js',
+
         ],
 
         'web.assets_backend': [
@@ -99,7 +106,6 @@
             'school_management/static/src/js/email_widget.js',
             'school_management/static/src/xml/email_widget_template.xml',
 
-            # 'school_management/static/src/js/standard.js',
         ],
     },
 

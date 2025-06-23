@@ -2,10 +2,21 @@
 <odoo>
     <template id="view_students_template" name="View Students">
         <t t-call="website.layout">
-            <div class="container my-5">
+            <div class="container my-6">
                 <h1 class="text-center text-primary mb-5" style="font-family: 'Arial', sans-serif; font-weight: bold;">
                     Students Profiles
                 </h1>
+                
+                <div class="text-center mb-4">
+                    <button id="create_student_btn" class="btn btn-success mx-2">
+                        Create Student
+                    </button>
+                    <button id="update_student_btn" class="btn btn-warning mx-2">
+                        Update Student
+                    </button>
+                </div>
+
+                <!-- Student Cards -->
                 <div class="row">
                     <t t-foreach="students" t-as="student">
                         <div class="col-md-4 mb-4 student-card">

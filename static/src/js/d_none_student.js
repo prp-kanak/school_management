@@ -10,7 +10,7 @@ setTimeout(() => {
         card.classList.add('d-none');
     });
 
-    const container = document.querySelector('.container.my-5');
+    const container = document.querySelector('.container.my-6');
     if (!container) {
         console.error('Container not found!');
         return;
