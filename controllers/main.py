@@ -10,7 +10,7 @@ class CustomMenuController(http.Controller):
 
 
 class SchoolManagement(http.Controller):
-    @http.route(['/students', '/students/page/<int:page>'], type='http', auth='public', website=True)
+    @http.route(['/students', '/students/page/<int:page>'], type='http', auth='user', website=True)
     def student_profile(self, page=1, **kwargs):
         
         user = request.env.user
@@ -22,7 +22,6 @@ class SchoolManagement(http.Controller):
                 students = request.env['student.student'].sudo().search([], offset=offset, limit=per_page)
                 total_students = request.env['student.student'].sudo().search_count([])
             else:
-                # Check if the user is linked to a teacher record
                 teacher = request.env['teacher.teacher'].sudo().search([('user_id', '=', user.id)], limit=1)
 
                 if teacher:
@@ -253,36 +252,21 @@ class StudentRpcTest(http.Controller):
             return {"status": "error", "message": "Student not found"}
 
 
-# class SaleOrderController(http.Controller):
-#     @http.route('/sale/order/patch', type='json', auth='public', methods=['PATCH'])
-#     def patch_sale_order_status(self, order_id, status=None):
-#         """Updates the status of a sale.order record."""
-#         sale_order = request.env['sale.order'].sudo().browse(order_id)
 
-#         if sale_order.exists():
-#             if status:
-#                 sale_order.write({'state': status})  # Update the state field
-#                 return {"status": "success", "message": f"Order status updated to {status}"}
-#             else:
-#                 return {"status": "error", "message": "No status provided"}
-#         else:
-#             return {"status": "error", "message": "Order not found"}
-
-
-class TeacherStudentController(http.Controller):
-    @http.route('/teacher/students', type='http', auth='user', website=True)
-    def view_students(self):
+# class TeacherStudentController(http.Controller):
+#     @http.route('/teacher/students', type='http', auth='user', website=True)
+#     def view_students(self):
         
-        user = request.env.user
+#         user = request.env.user
 
-        teacher = request.env['teacher.teacher'].sudo().search([('user_id', '=', user.id)], limit=1)
+#         teacher = request.env['teacher.teacher'].sudo().search([('user_id', '=', user.id)], limit=1)
 
-        if not teacher:
-            return request.render('website.403')  
+#         if not teacher:
+#             return request.render('website.403')  
 
-        students = request.env['student.student'].sudo().search([('class_id', '=', teacher.class_id.id)])
+#         students = request.env['student.student'].sudo().search([('class_id', '=', teacher.class_id.id)])
 
-        return request.render('school_management.view_students_template', {
-            'students': students,
-            'teacher': teacher,
-        })
+#         return request.render('school_management.view_students_template', {
+#             'students': students,
+#             'teacher': teacher,
+#         })

@@ -62,7 +62,9 @@
           'views/website_home_form.xml',
           # 'views/website_so_page.xml',
           'views/website_stock_update.xml',
-                                                    
+          'views/website_product_moq.xml',
+          'views/website_product_carousel.xml',
+                                  
 
           'views/snippets/options.xml',
           'views/snippets/s_snippet_name.xml',
@@ -93,10 +95,9 @@
 
             'school_management/static/src/js/student_create.js',
 
-            # 'school_management/static/src/js/student_patch.js',
-                
-            # 'school_management/static/src/js/update_sale_order.js',
+            'school_management/static/src/js/student_patch.js',
 
+            'school_management/static/src/js/website_product_moq.js',
         ],
 
         'web.assets_backend': [
@@ -105,6 +106,7 @@
 
             'school_management/static/src/js/email_widget.js',
             'school_management/static/src/xml/email_widget_template.xml',
+
 
         ],
     },

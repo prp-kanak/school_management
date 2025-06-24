@@ -218,6 +218,7 @@ class StudentStudent(models.Model):
     #     return res
 
 
+
     # @api.model
     # def create(self,vals):
     #     print("***************** before super call vals",vals) #remains same

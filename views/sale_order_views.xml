@@ -74,4 +74,16 @@
     </record>
 
 
+    <record id="view_product_variant_form_inherited" model="ir.ui.view">
+        <field name="name">product.variant.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_tooltip']" position="after">
+                <field name="minimum_order_qty"/>
+                <field name="new_arrival"/>
+            </xpath>        
+        </field>
+    </record>
+
 </odoo>

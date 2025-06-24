@@ -10,6 +10,12 @@
                 <strong>Out of Stock</strong>
             </span>
         </div>
+        <div>
+            <span t-if="product.sales_count &gt; 0">
+                <strong>Sold:</strong>
+                <t t-out="int(product.sales_count)"/>
+            </span>      
+        </div>
     </xpath>
     </template>
 </odoo>

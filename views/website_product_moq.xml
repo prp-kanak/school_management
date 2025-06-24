@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="product_details_inherit_moq" inherit_id="website_sale.product">
+        <xpath expr="//div[@id='product_details']" position="inside">
+            <t t-if="minimum_order_qty">
+                <div id="product_minimum_order_qty" class="mt-3">
+                    Minimum Order Quantity: <span t-esc="minimum_order_qty"/>
+                </div>
+                <input type="hidden" id="moq_value" t-att-value="minimum_order_qty"/>
+            </t>
+
+            <t t-if="sales_count">
+                <div id="product_sales_count" class="mt-3">
+                    Sales Count: <span t-esc="sales_count"/>
+                </div>
+                <input type="hidden" id="sales_count_value" t-att-value="sales_count"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>

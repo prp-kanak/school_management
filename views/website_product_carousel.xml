@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="inherit_shop_page_for_new_section" inherit_id="website_sale.products" name="New Arrival Carousel">
+        <xpath expr="//div[@id='wrap']" position="before">
+            <div class="container my-5" id="new_template_section">
+                <h2 class="text-center mb-4">New Arrivals</h2>
+                <t t-if="new_arrival_products">
+                    <div id="newArrivalCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <t t-set="chunk_size" t-value="3"/>
+                            <t t-set="chunks" t-value="[new_arrival_products[i:i+chunk_size] for i in range(0, len(new_arrival_products), chunk_size)]"/>
+                            <t t-set="chunk_index" t-value="0"/>
+                            <t t-foreach="chunks" t-as="group">
+                                <div t-attf-class="carousel-item #{'active' if chunk_index == 0 else ''}">
+                                    <div class="row justify-content-center">
+                                        <t t-foreach="group" t-as="product">
+                                            <div class="col-md-4 mb-4">
+                                                <div class="card h-100 shadow-sm">
+                                                    <a t-att-href="product.website_url">
+                                                        <img class="card-img-top" t-att-src="website.image_url(product, 'image_512')" t-att-alt="product.name" style="height: 300px; object-fit: cover;" />
+                                                    </a>
+                                                    <div class="card-body text-center">
+                                                        <h5 class="card-title"><t t-esc="product.name" /></h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
+                                <t t-set="chunk_index" t-value="chunk_index + 1"/>
+                            </t>
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#newArrivalCarousel" data-bs-slide="prev" style="width: 5%;">
+                            <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#newArrivalCarousel" data-bs-slide="next" style="width: 5%;">
+                            <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </t>
+                <t t-else="">
+                    <p class="text-center">No new arrivals at the moment.</p>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>
